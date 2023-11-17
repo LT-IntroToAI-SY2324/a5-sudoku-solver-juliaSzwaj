@@ -120,6 +120,8 @@ class Board:
                     pos = (i, j)
                     #print(mini)
                     #print(pos)
+        return pos
+
     def failure_test(self) -> bool:
         """Check if we've failed to correctly fill out the puzzle. If we find a cell
         that contains an [], then we have no more possibilities for the cell but haven't
@@ -160,7 +162,7 @@ class Board:
             assignment - value to place at given row, column coordinate
         """
         #more to do!
-        self.rows[row][column]=assignment
+        self.rows[row][column] = assignment
         self.num_nums_placed += 1
 
         for i in range(self.size):
@@ -188,9 +190,11 @@ def DFS(state: Board) -> Board:
     count = 0
 
     while not the_stack.is_empty():
-        print(the_stack)
+        #print(the_stack)
         curr = the_stack.pop()
+        count += 1
         if curr.goal_test():
+            print(f"It took {count} iterations to solve")
             return curr
         elif not curr.failure_test():
             row, col = curr.find_most_constrained_cell()
@@ -217,10 +221,25 @@ def BFS(state: Board) -> Board:
     Returns:
         either None in the case of invalid input or a solved board
     """
+    
+
     the_queue = Queue([state])
     count = 0
-    while not the_queue is empty:
-        j
+    while not the_queue.is_empty():
+        curr = the_queue.pop()
+        count += 1
+        if curr.goal_test():
+            print(f"It took {count} iterations to solve")
+            return curr
+        elif not curr.failure_test():
+            row, col = curr.find_most_constrained_cell()
+            mcc = curr.rows[row][col]
+            for sel in mcc:
+                cpy = copy.deepcopy(curr)
+                cpy.update(row, col, sel)
+                the_queue.push(cpy)
+    return None
+
 
     
 
@@ -400,4 +419,4 @@ if __name__ == "__main__":
     print("<<<<<<<<<<<<<< Testing BFS on Second Game >>>>>>>>>>>>>>")
 
     test_dfs_or_bfs(False, second_moves)
-    #pass
+    pass

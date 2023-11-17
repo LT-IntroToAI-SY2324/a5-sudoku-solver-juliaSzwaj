@@ -1,3 +1,4 @@
+import copy
 from typing import Generic, List, TypeVar
 
 # the Stack and Queue classes for DFS and BFS
@@ -31,7 +32,7 @@ class Stack:
 
     def __str__(self) -> str:
         """String representation of the stack"""
-        return f"The stack contains: {self.the_stack}"
+        return f"The length of the stack is {len(self.the_stack)}"
 
     def is_empty(self) -> bool:
         """Check if stack has no elements
